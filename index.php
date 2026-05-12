@@ -1,6 +1,11 @@
 <?php
 require_once 'config.php';
 
+// Debug temporal
+$env = parse_ini_file(__DIR__ . '/.env');
+echo "Conexión: " . $env['DB_CONNECTION'] . "<br>";
+echo "Base de datos: " . $env['DB_DATABASE'] . "<br>";
+
 // Obtener todas las tareas
 $tareas = $pdo->query("SELECT * FROM tareas ORDER BY creado_en DESC")->fetchAll(PDO::FETCH_ASSOC);
 ?>
