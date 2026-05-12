@@ -1,7 +1,16 @@
 <?php
+header('Cache-Control: no-store, no-cache, must-revalidate');
 require_once 'config.php';
 
 $tareas = $pdo->query("SELECT * FROM tareas ORDER BY creado_en DESC")->fetchAll(PDO::FETCH_ASSOC);
+
+$errores = [
+    'vacio'      => 'El nombre de la tarea no puede estar vacío.',
+    'largo'      => 'El nombre no puede superar los 255 caracteres.',
+    'noguardado' => 'La tarea no se guardó. Intenta de nuevo.',
+    'db'         => 'Error al conectar con la base de datos.',
+];
+$error = $errores[$_GET['error'] ?? ''] ?? '';
 ?>
 
 <!DOCTYPE html>
@@ -80,11 +89,24 @@ $tareas = $pdo->query("SELECT * FROM tareas ORDER BY creado_en DESC")->fetchAll(
             color: #999;
             padding: 20px;
         }
+        .error-msg {
+            background: #fde8e8;
+            color: #c0392b;
+            border: 1px solid #e74c3c;
+            border-radius: 4px;
+            padding: 10px 14px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
 
     <h1>📝 Lista de Tareas</h1>
+
+    <?php if ($error): ?>
+        <div class="error-msg"><?= htmlspecialchars($error) ?></div>
+    <?php endif; ?>
 
     <form action="crear.php" method="POST">
         <input type="text" name="nombre" placeholder="Nueva tarea..." required>
