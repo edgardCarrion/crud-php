@@ -1,16 +1,7 @@
 <?php
 require_once 'config.php';
 
-// Debug temporal
-$env = parse_ini_file(__DIR__ . '/.env');
-echo "Conexión: " . $env['DB_CONNECTION'] . "<br>";
-echo "Base de datos: " . $env['DB_DATABASE'] . "<br>";
-// Debug temporal
-var_dump(file_exists(__DIR__ . '/.env'));
-var_dump(parse_ini_file(__DIR__ . '/.env'));
-// Obtener todas las tareas
 $tareas = $pdo->query("SELECT * FROM tareas ORDER BY creado_en DESC")->fetchAll(PDO::FETCH_ASSOC);
-var_dump($tareas);
 ?>
 
 <!DOCTYPE html>
@@ -70,6 +61,20 @@ var_dump($tareas);
             font-size: 14px;
         }
         .eliminar:hover { background: #c0392b; }
+        .editar {
+            background: #3498db;
+            padding: 6px 12px;
+            font-size: 14px;
+            text-decoration: none;
+            color: white;
+            border-radius: 4px;
+        }
+        .editar:hover { background: #2980b9; }
+        .acciones {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
         .vacio {
             text-align: center;
             color: #999;
@@ -93,10 +98,13 @@ var_dump($tareas);
             <?php foreach ($tareas as $tarea): ?>
                 <li>
                     <span><?= htmlspecialchars($tarea['nombre']) ?></span>
-                    <form action="eliminar.php" method="POST">
-                        <input type="hidden" name="id" value="<?= $tarea['id'] ?>">
-                        <button class="eliminar" type="submit">Eliminar</button>
-                    </form>
+                    <div class="acciones">
+                        <a class="editar" href="editar.php?id=<?= $tarea['id'] ?>">Editar</a>
+                        <form action="eliminar.php" method="POST">
+                            <input type="hidden" name="id" value="<?= $tarea['id'] ?>">
+                            <button class="eliminar" type="submit">Eliminar</button>
+                        </form>
+                    </div>
                 </li>
             <?php endforeach; ?>
         <?php endif; ?>
