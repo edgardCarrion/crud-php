@@ -28,6 +28,7 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           protocol: ftps
+          passive: true
           local-dir: ./
           server-dir: public_html/crud-tareas/
           exclude: |
