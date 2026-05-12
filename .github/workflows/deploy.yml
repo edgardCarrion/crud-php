@@ -30,7 +30,7 @@ jobs:
           protocol: ftps
           passive: true
           local-dir: ./
-          server-dir: public_html/crud-tareas/
+          server-dir: crud-tareas/
           exclude: |
             **/.git*
             **/.git*/**
