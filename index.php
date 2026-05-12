@@ -10,6 +10,7 @@ var_dump(file_exists(__DIR__ . '/.env'));
 var_dump(parse_ini_file(__DIR__ . '/.env'));
 // Obtener todas las tareas
 $tareas = $pdo->query("SELECT * FROM tareas ORDER BY creado_en DESC")->fetchAll(PDO::FETCH_ASSOC);
+var_dump($tareas);
 ?>
 
 <!DOCTYPE html>
